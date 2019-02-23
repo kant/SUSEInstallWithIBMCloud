@@ -38,9 +38,9 @@ The bootvm is a CentOS7 IBM Cloud virtual server with the following configuratio
     * Runlevel 3
     * Basic IP address configuration
 
-        ---
-        ##### Checkpoint/Restart
-        ---
+---
+##### Checkpoint/Restart
+---
 
   * /etc/init.d/after.local post-install script
     - Test and report issues with bonds, vlans and IP addresses
@@ -52,7 +52,7 @@ The bootvm is a CentOS7 IBM Cloud virtual server with the following configuratio
     - Setup SMT server
       - Enable repos to be mirrored
       - Mirror repos
-    - NFS export /srv/www/htdocs/repo
+    - NFS export `/srv/www/htdocs/repo`
     - Create raw disk file and iscsi target for soc pacemaker
     - Enable KVM
     - Copy soc-admin and ses-admin qcow2 disk images
@@ -85,17 +85,17 @@ The bootvm is a CentOS7 IBM Cloud virtual server with the following configuratio
           4. Verify items before starting salt
               * ntpq -p
           - Enable and start salt-master
-          - Edit /etc/salt/minion.d/master.conf
+          - Edit `/etc/salt/minion.d/master.conf`
             ```
-          master: <hostname of master>
+            master: <hostname of master>
             ```
           - Enable and start salt-minion
           - Gather local salt fingerprint
           - Record for salt-master to review
 
-            ---
-            ##### Checkpoint/Restart
-            ---
+---
+##### Checkpoint/Restart
+---
     - Start soc-admin and ses-admin VMs
     - Verify crowbar is ready
     - Verify salt-master is ready
@@ -124,14 +124,14 @@ The bootvm is a CentOS7 IBM Cloud virtual server with the following configuratio
       - bond1
         - For ses-*, Storage client (bond1) vlan
 
-            ---
-            ##### Checkpoint/Restart
-            ---
+---
+##### Checkpoint/Restart
+---
 
   * /etc/init.d/after.local post-install script
     1. Test and report issues with bonds, vlans and IP addresses
     2. Local “/etc/hosts” with all SES node hostnames
-    3. Edit /etc/salt/minion.d/master.conf
+    3. Edit `/etc/salt/minion.d/master.conf`
         ```
         master: <hostname of master>
         ```
@@ -149,16 +149,16 @@ The bootvm is a CentOS7 IBM Cloud virtual server with the following configuratio
     - salt-key --accept-all
   - zypper in deapsea
   - **TARGET WITH DEEPSEA_MINIONS OPTION???**
-  - Edit /srv/pillar/ceph/master_minion.sls
-```
+  - Edit `/srv/pillar/ceph/master_minion.sls`
+    ```
     master_minion: <hostname of master>
-```
+    ```
   - salt-run state.orch ceph.stage.prep
   - **salt-run state.orch ceph.migrate.subvolume???  (if btrfs filesystem is deployed)**
   - salt-run state.orch ceph.stage.discovery
-  - Edit /srv/pillar/ceph/stack/ceph/cluster.yml
+  - Edit `/srv/pillar/ceph/stack/ceph/cluster.yml`
     - cluster_network: and public_network:
-  - Copy preconfigured /srv/pillar/ceph/proposals/policy.cfg file
+  - Copy preconfigured `/srv/pillar/ceph/proposals/policy.cfg` file
   - salt-run state.orch ceph.stage.configure
     1. Verify pillar configuration data
   - salt-run state.orch ceph.stage.deploy
@@ -188,16 +188,16 @@ The bootvm is a CentOS7 IBM Cloud virtual server with the following configuratio
     - Packages
       - ceph-common
 
-        ---
-        ##### Checkpoint/Restart
-        ---
+---
+##### Checkpoint/Restart
+---
 
   - /etc/init.d/after.local post-install script
     1. Test and report issues with bonds, vlans and IP addresses
     2. wget -O crowbar_register http://<soc admin network IP>:8091/suse-12.2/x86_64/crowbar_register
     3. crowbar_register –keep-existing-hostname
-    4. Copy /etc/ceph/ceph.conf and /etc/ceph/ceph.client.admin.keyring from ses-admin
-    5. Copy ssl certificates to /etc/crowbar/ssl/certs and /etc/crowbar/ssl/private
+    4. Copy `/etc/ceph/ceph.conf` and `/etc/ceph/ceph.client.admin.keyring` from ses-admin
+    5. Copy ssl certificates to `/etc/crowbar/ssl/certs` and `/etc/crowbar/ssl/private`
       * With following directory ownership and permissions
 
           ```
